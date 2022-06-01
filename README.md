@@ -1,5 +1,8 @@
 # pokedex
 
+## Example
+See [Pokedex in Vue.js](https://julioguimaraes.com/pokedexvue/)
+
 ## Project setup
 ```
 npm install
