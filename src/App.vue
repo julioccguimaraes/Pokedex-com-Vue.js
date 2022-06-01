@@ -6,14 +6,14 @@
         <input class="input" type="text" placeholder="Buscar pokemon pelo nome" v-model="search">
       </div>
       <div class="control">
-        <a class="button is-success">
+        <a class="button is-success" @click="searching">
           Buscar
         </a>
       </div>
     </div>
-
-    <!--<div v-for="(poke, index) in pokemons" :key="index">-->
-    <div v-for="(poke, index) in searchResult" :key="index">
+    <!--<div v-for="(poke, index) in searchResult" :key="index"> -->
+    <!-- <div v-for="(poke, index) in pokemons" :key="index"> -->
+    <div v-for="(poke, index) in filteredPokemons" :key="index"> 
       <Pokemon :name="poke.name" :url="poke.url" :num="index + 1" />
     </div>
   </div>
@@ -31,23 +31,37 @@ export default {
   data() {
     return {
       pokemons: [],
-      search: ''
+      search: '',
+      filteredPokemons: []
     }
   },
   created: function() { // executado sempre que uma página é caregada
     axios.get("https://pokeapi.co/api/v2/pokemon?limit=151&offset=0").then(res => {
       this.pokemons = res.data.results
+      this.filteredPokemons = res.data.results
     }).catch(err =>{
       console.log(err)
     })
   },
   computed: {
+    /*
     searchResult: function() {
       if(this.search.trim() == '') {
         return this.pokemons
       } else {
         return this.pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(this.search.toLowerCase())) // includes is ECMAScript 5
       }
+    }*/
+  },
+  methods: {
+    searching: function() {
+      this.filteredPokemons = this.pokemons
+
+      if(this.search.trim() == '') {
+        this.filteredPokemons = this.pokemons
+      } else {
+        this.filteredPokemons = this.pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(this.search.toLowerCase())) // includes is ECMAScript 5
+      }     
     }
   }
 }
