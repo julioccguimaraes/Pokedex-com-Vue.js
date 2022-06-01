@@ -13,7 +13,7 @@
     </div>
     <!--<div v-for="(poke, index) in searchResult" :key="index"> -->
     <!-- <div v-for="(poke, index) in pokemons" :key="index"> -->
-    <div v-for="(poke, index) in filteredPokemons" :key="index"> 
+    <div v-for="(poke, index) in filteredPokemons" :key="poke.url"> 
       <Pokemon :name="poke.name" :url="poke.url" :num="index + 1" />
     </div>
   </div>
